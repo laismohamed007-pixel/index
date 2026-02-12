@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>For You ❤️</title>
+
+<style>
+body {
+    margin:0;
+    font-family: Arial, sans-serif;
+    text-align:center;
+    background: linear-gradient(to bottom, #ffd6e8, #ffffff);
+    overflow:hidden;
+}
+
+.screen {
+    display:none;
+    height:100vh;
+    padding:20px;
+}
+
+.active {
+    display:block;
+}
+
+h1 {
+    color:#d63384;
+}
+
+button {
+    padding:15px 25px;
+    font-size:18px;
+    border:none;
+    border-radius:10px;
+    cursor:pointer;
+    margin:10px;
+}
+
+.caution-btn {
+    background: repeating-linear-gradient(
+        45deg,
+        red,
+        red 10px,
+        yellow 10px,
+        yellow 20px,
+        black 20px,
+        black 30px
+    );
+    color:white;
+    font-weight:bold;
+}
+
+.fun-btn {
+    background:#ff4d88;
+    color:white;
+}
+
+.media {
+    width:260px;
+    border-radius:15px;
+    margin-top:20px;
+    box-shadow:0 10px 20px rgba(0,0,0,0.15);
+}
+
+video {
+    width:260px;
+    margin-top:15px;
+    border-radius:15px;
+}
+
+.heart {
+    position:absolute;
+    font-size:24px;
+    animation: float 6s linear infinite;
+}
+
+@keyframes float {
+    from {transform: translateY(100vh);}
+    to {transform: translateY(-10vh);}
+}
+
+.explosion-heart {
+    position:absolute;
+    font-size:28px;
+    animation: explode 1.2s ease-out forwards;
+}
+
+@keyframes explode {
+    from {transform: scale(0.5); opacity:1;}
+    to {transform: translate(var(--x), var(--y)) scale(1.5); opacity:0;}
+}
+
+.message-box {
+    background:white;
+    padding:20px;
+    border-radius:15px;
+    margin-top:20px;
+    display:none;
+}
+
+</style>
+</head>
+
+<body>
+
+<!-- Music -->
+<div id="music" style="display:none;">
+<iframe width="0" height="0"
+src="https://www.youtube.com/embed/p5rQHoaQpTw?start=52&autoplay=1&loop=1&playlist=p5rQHoaQpTw"
+frameborder="0" allow="autoplay"></iframe>
+</div>
+
+<!-- Screen 1 -->
+<div id="screen1" class="screen active">
+    <h1>Warning: Extremely cute content ahead</h1>
+    <button class="caution-btn" onclick="startSite()">Enter at your own risk</button>
+</div>
+
+<!-- Screen 2 -->
+<div id="screen2" class="screen">
+    <h1>Tap the hearts ❤️</h1>
+
+    <!-- PHOTO -->
+    <img src="ourphoto.jpg" class="media">
+
+    <!-- VIDEO -->
+    <br>
+    <video controls>
+        <source src="ourvideo.mp4" type="video/mp4">
+        Your browser does not support video.
+    </video>
+
+    <button class="fun-btn" onclick="showDontClick()">Don’t click this</button>
+
+    <div id="dontClickMessage" class="message-box">
+        What you’re opening da bob🤨, it said don’t click this? Tfucky?🤨
+    </div>
+
+    <h2>Will you be my Valentine?</h2>
+
+    <button class="fun-btn" onclick="showFinal()">Yes</button>
+    <button class="fun-btn" id="noBtn">No</button>
+</div>
+
+<!-- Screen 3 -->
+<div id="screen3" class="screen">
+    <h1>I love ypu my sunny, I not very funny😞</h1>
+    <p>my love for you knows no bounds, I’m glad that you have been found, by me:)</p>
+</div>
+
+<script>
+
+function startSite(){
+    document.getElementById("screen1").classList.remove("active");
+    document.getElementById("screen2").classList.add("active");
+    document.getElementById("music").style.display="block";
+    createHearts();
+}
+
+function showDontClick(){
+    document.getElementById("dontClickMessage").style.display="block";
+}
+
+function showFinal(){
+    document.getElementById("screen2").classList.remove("active");
+    document.getElementById("screen3").classList.add("active");
+    heartExplosion();
+}
+
+function createHearts(){
+    setInterval(()=>{
+        let heart = document.createElement("div");
+        heart.className="heart";
+        heart.innerHTML="❤️";
+        heart.style.left=Math.random()*100+"vw";
+        document.body.appendChild(heart);
+        setTimeout(()=>heart.remove(),6000);
+    },800);
+}
+
+function heartExplosion(){
+    for(let i=0;i<25;i++){
+        let heart=document.createElement("div");
+        heart.className="explosion-heart";
+        heart.innerHTML="❤️";
+        heart.style.left="50%";
+        heart.style.top="50%";
+        heart.style.setProperty('--x', (Math.random()*400-200)+'px');
+        heart.style.setProperty('--y', (Math.random()*400-200)+'px');
+        document.body.appendChild(heart);
+        setTimeout(()=>heart.remove(),1200);
+    }
+}
+
+const noBtn=document.getElementById("noBtn");
+
+noBtn.addEventListener("mouseover",moveButton);
+noBtn.addEventListener("touchstart",moveButton);
+
+function moveButton(){
+    const x=Math.random()*(window.innerWidth-100);
+    const y=Math.random()*(window.innerHeight-50);
+    noBtn.style.position="absolute";
+    noBtn.style.left=x+"px";
+    noBtn.style.top=y+"px";
+}
+
+</script>
+
+</body>
+</html>
