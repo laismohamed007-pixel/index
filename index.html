@@ -12,9 +12,15 @@ body{
   text-align:center;
 }
 
-.section{
-  min-height:100vh;
+/* pages */
+.page{
+  display:none;
+  height:100vh;
   padding:30px 20px;
+}
+
+.active{
+  display:block;
 }
 
 button{
@@ -41,7 +47,6 @@ button{
   width:260px;
   border-radius:15px;
   margin-top:20px;
-  box-shadow:0 10px 20px rgba(0,0,0,0.15);
 }
 
 video{
@@ -60,36 +65,40 @@ video{
   from{transform:scale(0.5);opacity:1;}
   to{transform:translate(var(--x),var(--y)) scale(1.5);opacity:0;}
 }
+
 </style>
 </head>
 
 <body>
 
-<!-- Background Music -->
+<!-- MUSIC -->
 <audio id="bgMusic" loop preload="auto">
   <source src="music.mp3" type="audio/mpeg">
 </audio>
-<!-- SECTION 1 -->
-<div class="section">
+
+<!-- PAGE 1 -->
+<div id="page1" class="page active">
   <h1>Don’t click this</h1>
-  <button class="caution-btn" onclick="startSite()">Enter at your own risk</button>
+  <button class="caution-btn" onclick="goToMoments()">Enter at your own risk</button>
 </div>
 
-<!-- SECTION 2 -->
-<div class="section">
-  <h1>Our Moment ❤️</h1>
+<!-- PAGE 2 -->
+<div id="page2" class="page">
+  <h1>Our Moments ❤️</h1>
   <img src="ourphoto.jpg" class="photo">
+  <br>
+  <button class="fun-btn" onclick="goToQuestion()">Next</button>
 </div>
 
-<!-- SECTION 3 -->
-<div class="section">
+<!-- PAGE 3 -->
+<div id="page3" class="page">
   <h1>Will you be my Valentine?</h1>
   <button class="fun-btn" onclick="celebrate()">Yes</button>
   <button class="fun-btn" id="noBtn">No</button>
 </div>
 
-<!-- SECTION 4 -->
-<div class="section" id="celebrationSection" style="display:none;">
+<!-- PAGE 4 -->
+<div id="page4" class="page">
   <h1>OMG YES ❤️</h1>
   <video id="celebrationVideo" controls>
     <source src="ourvideo.mp4" type="video/mp4">
@@ -98,15 +107,25 @@ video{
 
 <script>
 
-function startSite(){
-  document.getElementById("bgMusic").play();
+function showPage(id){
+  document.querySelectorAll(".page").forEach(p => p.classList.remove("active"));
+  document.getElementById(id).classList.add("active");
+}
+
+function goToMoments(){
+  let music=document.getElementById("bgMusic");
+  music.play().catch(()=>{});
+  showPage("page2");
+}
+
+function goToQuestion(){
+  showPage("page3");
 }
 
 function celebrate(){
-  document.getElementById("celebrationSection").style.display="block";
+  showPage("page4");
   document.getElementById("celebrationVideo").play();
   heartExplosion();
-  window.scrollTo({top:document.body.scrollHeight, behavior:'smooth'});
 }
 
 function heartExplosion(){
